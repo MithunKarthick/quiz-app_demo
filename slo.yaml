@@ -1,0 +1,39 @@
+# SRE - Service Level Objectives
+# quiz-app SLO Definition
+
+service: quiz-app
+version: 1.0.0
+
+slos:
+  - name: availability
+    description: "Quiz app must be available to trainees"
+    target: 99.5%
+    window: 30d
+    error_budget: 0.5%
+    error_budget_minutes_per_month: 216
+    indicator:
+      type: availability
+      endpoint: /health
+      expected_status: 200
+
+  - name: latency
+    description: "Quiz pages must load fast"
+    target: 95%
+    window: 30d
+    indicator:
+      type: latency
+      threshold_ms: 500
+      percentile: p95
+
+  - name: error_rate
+    description: "Low error rate for quiz submissions"
+    target: 99%
+    window: 30d
+    indicator:
+      type: error_rate
+      threshold_percent: 1
+
+notes:
+  - "Error budget = 0.5% of 30 days = 3.6 hours downtime allowed per month"
+  - "If error budget is consumed, freeze deployments until next window"
+  - "SLO breach triggers incident response process"

@@ -83,7 +83,7 @@ HOME_HTML = """
       <input type="email" name="email" placeholder="Your Email" required />
       <button type="submit">Start Quiz →</button>
     </form>
-    <p class="footer">Powered by Flask · Kubernetes · Istio · ArgoCD</p>
+    <p class="footer">Built with Flask · Secured by Istio · Deployed via ArgoCD · Orchestrated by Kubernetes</p>
   </div>
 </body>
 </html>

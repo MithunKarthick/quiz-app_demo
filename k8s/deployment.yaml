@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: quiz-app
-        image: nithyathangapandian/quiz-app:65d8781
+        image: nithyathangapandian/quiz-app:c77da62
         imagePullPolicy: Never
         ports:
         - containerPort: 5000

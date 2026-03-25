@@ -44,7 +44,7 @@ QUIZ = {
     ]
 }
 
-PASS_SCORE = 60  # percent
+PASS_SCORE = 70  # percent
 
 # ── HTML Templates ──
 HOME_HTML = """

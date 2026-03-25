@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: quiz-app
-        image: localhost:5001/quiz-app:latest
+        image: quiz-app:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 5000
         livenessProbe:

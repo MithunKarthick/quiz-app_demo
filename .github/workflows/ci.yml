@@ -55,7 +55,7 @@ jobs:
         env:
           GH_PAT: ${{ secrets.GH_PAT }} 
         run: |
-         git config user.name "github-actions"
+         git config user.name "Mithun Karthick"
          git config user.email "actions@github.com"
          # Replace origin URL with PAT authentication
          git remote set-url origin https://$GH_PAT@github.com/${{ github.repository }}.git

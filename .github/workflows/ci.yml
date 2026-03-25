@@ -3,6 +3,8 @@ name: CI Pipeline — Build & Scan
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'k8s/**'          # CRITICAL: ignore k8s folder changes to break loop
   pull_request:
     branches: [ main ]
 
@@ -14,7 +16,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          persist-credentials: false  # disable default GITHUB_TOKEN for git push
+          fetch-depth: 0          # SonarCloud needs full history
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -27,6 +30,7 @@ jobs:
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@master
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
          
         continue-on-error: true
@@ -49,13 +53,14 @@ jobs:
 
       - name: Commit & push changes
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}   # your secret storing PAT
+          GH_PAT: ${{ secrets.GH_PAT }} 
         run: |
          git config user.name "github-actions"
          git config user.email "actions@github.com"
          # Replace origin URL with PAT authentication
          git remote set-url origin https://$GH_PAT@github.com/${{ github.repository }}.git
          git add k8s/deployment.yaml
-         git commit -m "update image to $TAG"
+         git diff --staged --quiet || git commit -m "ci: update image to $TAG [skip ci]"
          git push
+
         
